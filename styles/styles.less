@@ -1,0 +1,462 @@
+@import "../bower_components/bootstrap/less/bootstrap.less";
+
+@tracklist_cover_width: 100px;
+@block_large_width:     320px;
+@block_small_width:     250px;
+
+@screen_phone:           @block_large_width;
+@screen_phone_landscape: 576px;
+@screen_tablet:          (@block_large_width + @block_small_width);
+
+@mixmonitor_arrow_height: 10px;
+@mixmonitor_arrow_width:  20px;
+
+@mixmonitor_content_height: 20px;
+@mixmonitor_padding: 10px;
+
+@color_mix_perfect: rgb(96,  211, 96);
+@color_mix_good:    rgb(174, 211, 96);
+@color_mix_poor:    rgb(255, 243, 110);
+@color_mix_bad:     rgb(211, 96,  96);
+
+
+@color_dark_gray: rgb(44, 44, 42);
+@color_pearl: rgb(238, 238, 238);
+
+@color_mix_bg: @color_pearl;
+
+@color_font_mix_poor: rgb(0, 0, 0);
+
+body {
+    font-size: 13px;
+    //margin: 0 auto;
+    //background-color: @color_dark_gray;
+    background-color: rgb(228, 228, 185);
+    //color: rgb(207, 207, 207);
+    color: rgb(82, 82, 82);
+    /*width: 480px;*/
+    min-width: @screen_phone;
+}
+
+.container {
+    @media (min-width: @screen_phone_landscape) {
+        width: @screen_phone_landscape;
+    }
+}
+
+strong {
+    color: white;
+}
+
+.mycontainer {
+    margin-left: auto; margin-right: auto;
+    //width: @screen_tablet;
+    width: @screen_phone;
+
+    @media (max-width: @screen_tablet) {
+        width: @screen_phone;
+    }
+}
+
+#tracksbar {
+    background-color: gray;
+
+    /*@media (min-width: @screen_tablet) {
+        position: fixed;
+        //top: 0;
+        margin-left: @block_large_width;
+    }*/
+}
+
+.block {
+    &.large {
+        width: @block_large_width;
+    }
+    &.small {
+        width:     @block_small_width;
+        font-size: inherit; // overwrite bootstrap generic small style
+    }
+}
+
+/**
+ * Covers! :)
+ */
+.cover-placeholder{
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.05);
+
+    img {
+        display: block;
+        border-radius: 50%; // circular cover :)
+    }
+}
+
+/**
+ * Tracklist! here we go
+ */
+.tracklist {
+
+    /**
+     * MIX
+     */
+    .mix {
+
+        /**
+         * MIX TRACK
+         */
+        .track {
+            height:   @tracklist_cover_width;
+            overflow: hidden;
+            .clearfix;
+
+            & > * {
+            }
+
+            .cover-placeholder {
+                .pull-left;
+                width:  @tracklist_cover_width;
+                height: @tracklist_cover_width;
+
+                img {
+                    width: @tracklist_cover_width;
+                }
+            }
+
+            & > .info {
+                //width: @block_large_width - @tracklist_cover_width;
+                margin-left: @tracklist_cover_width;
+                padding: 5px 15px;
+                h3, p {
+                    margin: 0;
+                }
+
+                h3 {
+                    height: 28px;
+                    line-height: 28px;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+
+                }
+            }
+        }
+
+        /**
+         * MIX INFO
+         */
+        & > .temperature {
+            width:            @tracklist_cover_width - 16;
+            color:            white;
+            background-color: @color_mix_perfect;
+
+            // border-width: 30px (@tracklist_cover_width / 2) 0px;
+            // border-style: solid;
+            // border-color: @color_mix_perfect transparent;
+
+            .rotate(-4deg);
+            margin: -10px 0;
+            margin-left: 8px;
+            text-align: center;
+            opacity: 0.98;
+            font-size: 16px;
+            line-height: 30px;
+
+            cursor: pointer;
+
+            & .expanded {
+                padding:  0 @mixmonitor_padding 0;
+                //width:    @block_large_width;
+                width:    auto;
+                height:   auto;
+                overflow: auto;
+                border:   none;
+                margin:   1px 0;
+
+                background-color: @color_mix_bg;
+                color: @color_dark_gray;
+                strong { color: inherit; }
+
+                cursor: auto;
+
+
+                //background-color: @color_mix_perfect;
+
+                .highlight_mix_borders(@color) {
+                    border        : none;
+                    border-left    : 3px solid @color;
+                    //border-bottom : 3px solid @color;
+                }
+
+                //&.perfect { #gradient > .vertical(@color_mix_perfect; transparent); }
+                &.perfect-mix { .highlight_mix_borders(@color_mix_perfect); background-color: rgb(242, 255, 242); }
+                &.good-mix    { .highlight_mix_borders(@color_mix_good);    background-color: rgb(251, 255, 242); }
+                &.poor-mix    { .highlight_mix_borders(@color_mix_poor);    background-color: rgb(255, 254, 249); }
+                &.bad-mix     { .highlight_mix_borders(@color_mix_bad);     background-color: rgb(255, 247, 247); }
+
+                dl {
+                    dt {
+                        float: left;
+                    }
+                }
+
+                &>  dl {
+                    margin:  0 0 5px;
+                    padding: 0px;
+                    .clearfix();
+
+                    &.harmonic-score {
+                        margin-top: 15px;
+                    }
+
+                    dt, dd {
+                        .box-sizing(border-box);
+                    }
+
+
+                    dt {
+                        float: left;
+                        width: 125px;
+                        font-weight: normal;
+                        padding: 0 8px 0 10px;
+
+                        &:after {
+                            content: ":";
+                        }
+                    }
+
+                    dd {
+                        margin-left: 125px;
+                        //font-weight: bold;
+                        text-align: left;
+                        //font-size: 16px;
+                        padding-right: 10px;
+                    }
+                }
+
+                .label-score {
+                    font-size: 15px;
+                    text-transform: uppercase;
+                }
+                &.perfect-mix .label-score { background-color: @color_mix_perfect; }
+                &.good-mix .label-score    { background-color: @color_mix_good;    }
+                &.poor-mix .label-score    { background-color: @color_mix_poor;    color: @color_dark_gray; }
+                &.bad-mix .label-score     { background-color: @color_mix_bad;     }
+
+                .mixer {
+                    //background-color: rgba(0, 0, 0, 0.1);
+                    position: relative;
+
+                    .close {
+                        height:   22px;
+                        line-height: 20px;
+                        width:    24px;
+                        overflow: hidden;
+                        float:    none;
+                        position: absolute;
+                        top:      0;
+                        right:    -(@mixmonitor_padding);
+                    }
+
+                    .mix-info {
+                        padding: 0 0 @mixmonitor_padding;
+                    }
+
+                    .track-info {
+                        .clearfix;
+                        //padding: @mixmonitor_padding @mixmonitor_padding @mixmonitor_padding 0;
+
+                        .track-letter {
+                            float            : left;
+                            width            : @tracklist_cover_width - 3;
+                            height           : @tracklist_cover_width - 3;
+                            margin-left      : -@mixmonitor_padding;
+                            text-transform   : uppercase;
+                            font-weight      : bold;
+                            font-size        :  20px;
+                            text-align       : center;
+                            line-height      : @tracklist_cover_width;
+                            background-color : rgba(0, 0, 0, 0.1);
+                        }
+
+                        /*&:nth-of-type(1) .track-letter {
+                            margin-top: -@mixmonitor_padding;
+                        }
+
+                        &:nth-of-type(3) .track-letter {
+                            margin-bottom: -@mixmonitor_padding;
+                        }*/
+
+                        dl {
+                            display: block;
+                            margin: 0px;
+                            margin-left: @tracklist_cover_width - 3;
+                            padding: @mixmonitor_padding 0;
+
+                            dt, dd {
+                                padding: 0;
+                                width: auto;
+                                text-align: left;
+                                margin-left: 0;
+                                margin-bottom: 5px;
+                            }
+
+                            dt:after {
+                                content: "";
+                            }
+
+                            dd {
+                                margin-left: 20px;
+                            }
+                        }
+                    }
+
+                    .tracks-info {
+                        .clearfix();
+
+                        .player {
+                            //text-align: center;
+                            width: 50%;
+                            float: left;
+
+                            &:last-child {
+                                //background-color: rgba(0, 0, 0, 0.1);
+                                //border-left: 1px solid rgba(0, 0, 0, 0.2);
+                            }
+
+                            .cover-placeholder {
+                                overflow: hidden;
+                                height:   75px;
+
+                                img {
+                                    width: 100%;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.perfect-mix > .temperature { background-color: @color_mix_perfect; }
+        &.good-mix > .temperature {    background-color: @color_mix_good; }
+        &.poor-mix > .temperature {    background-color: @color_mix_poor; color: rgb(126, 107, 9); }
+        &.bad-mix > .temperature {     background-color: @color_mix_bad; }
+    }
+}
+
+
+
+        /*.cover-placeholder {
+            width:  100px;
+            height: 100px;
+            //margin-right: auto; margin-left: auto;
+
+            img {
+                width: 100px;
+            }
+        }*/
+
+        /*.monitor-inner-wrapper {
+            height: @mixmonitor_content_height;
+            background-color: @color_mix_perfect;
+        }*/
+
+
+        /*&.arrowed {
+            position: relative;
+            z-index:  2;
+
+            overflow: visible;
+            margin-top: -(@mixmonitor_arrow_height);
+
+            & + .track {
+                margin-top: -(@mixmonitor_arrow_height);
+            }
+
+            span.arrow {
+                display: block;
+            }
+
+            .arrow {
+                margin-left: (@tracklist_cover_width / 2) - (@mixmonitor_arrow_width / 2);
+                width:       @mixmonitor_arrow_width;
+
+                border-bottom: @mixmonitor_arrow_height solid @color_mix_perfect;
+                border-left:   @mixmonitor_arrow_height solid transparent;
+                border-right:  @mixmonitor_arrow_height solid transparent;
+
+                &.down {
+                    border-bottom: none;
+                    border-top:    @mixmonitor_arrow_height solid @color_mix_perfect;
+                }
+            }
+        }
+    }
+}
+*/
+
+.label-warning {
+    background-color: rgb(213, 138, 0);
+}
+
+.label-deprecated {
+    .label-default;
+    opacity: 0.3;
+}
+
+/*
+.night .briefing {
+    opacity: 0.6;
+}
+
+.mix > div > * {
+    display:        inline-block;
+    vertical-align: top;
+}
+
+.mix > div > img {
+    width: 50px;
+}
+
+.mix p {
+    margin: 0;
+}
+
+h3 {
+    margin: 0;
+    color: rgb(0, 141, 207);
+}
+
+h4 {
+    margin: 0;
+}
+
+.mix .track,
+.mix {
+    margin-bottom: 10px;
+}
+
+.mix .track:last-child {
+    margin-bottom: 0;
+}
+
+.briefing {
+    margin-top: 10px;
+    opacity: 0.4;
+    margin-left: 50px;
+}
+
+.tracklist {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.track > :first-child {
+    font-size: 28px;
+    font-family: Georgia;
+}
+
+.track > div {
+    width: 75%;
+}*/

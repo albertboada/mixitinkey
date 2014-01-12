@@ -1,0 +1,14 @@
+{
+  "name": "mixitinkey",
+  "dependencies": {
+    "angular-animate": "1.2.8",
+    "angular-route": "1.2.8",
+    "bootstrap": "3.0.3",
+    "angular-sanitize": "1.2.8",
+    "angular-strap": "2.0.0-beta.2",
+    "less": "1.6.0"
+  },
+  "resolutions": {
+    "angular": "1.2.8"
+  }
+}
